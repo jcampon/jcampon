@@ -9,27 +9,27 @@ using JCampon.MongoDB.Entities;
 
 namespace JCampon.MongoDB.Repositories
 {
-    public interface IMongoRepository<MongoDbEntity>
+	public interface IMongoRepository<TMongoDbEntity> where TMongoDbEntity : MongoDbEntity
     {
         /// <summary>
         /// Adds a new record
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        Task<ObjectId> Add(MongoDbEntity entity);
+		Task<ObjectId> Add(TMongoDbEntity entity);
 
         /// <summary>
 		/// get all records
 		/// </summary>
 		/// <returns>return all entities in the database, returns entity. If no matches are found, returns null</returns>
-		Task<IEnumerable<MongoDbEntity>> GetAll();
+		Task<IEnumerable<TMongoDbEntity>> GetAll();
 
         /// <summary>
 		/// Find an entity by its Id
 		/// </summary>
 		/// <param name="id">Id of entity</param>
 		/// <returns>If Id matches an entity in the database, returns entity. If no matches are found, returns null</returns>
-		Task<MongoDbEntity> GetById(ObjectId id);
+		Task<TMongoDbEntity> GetById(ObjectId id);
 
     }
 

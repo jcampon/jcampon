@@ -9,7 +9,7 @@ using MongoDB.Bson;
 
 namespace JCampon.MongoDB.Entities
 {
-    public abstract class MongoDbEntity
+	public abstract class MongoDbEntity
     {
         [BsonId]
         public ObjectId _id { get; set; }

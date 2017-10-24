@@ -9,11 +9,20 @@ using JCampon.MongoDB.Entities;
 
 namespace JCampon.MongoDB.Repositories
 {
-    //public abstract class MongoRepositoryWithIntId<TEntity> : MongoRepository<TEntity>, IMongoRepository<TEntity> where TEntity : IMongoDbEntity<ObjectId>
-    public abstract class MongoRepositoryWithIntId<TEntity, TId> : MongoRepository<TEntity, TId>, IMongoRepository<TEntity, TId> where TEntity : IMongoDbEntity<int>
+
+	public abstract class MongoRepositoryWithIntId<TMongoDbEntityWithIntId> : MongoRepository where TMongoDbEntityWithIntId : MongoDbEntityWithIntId
     {
-        public MongoRepositoryWithIntId(IMongoDbDatabaseContext dbContext) : base(dbContext)
-        {
-        }
+
+		/// <summary>
+		/// Adds a new record
+		/// </summary>
+		/// <param name="entity"></param>
+		/// <returns></returns>
+		public async Task<int> Add(TMongoDbEntityWithIntId entity)
+		{
+			await Collection.InsertOneAsync(entity);
+
+			return entity._id;
+		}    
     }
 }

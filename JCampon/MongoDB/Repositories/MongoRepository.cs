@@ -12,21 +12,27 @@ namespace JCampon.MongoDB.Repositories
     public abstract class MongoRepository : IMongoRepository<MongoDbEntity>
     {
         private readonly IMongoDbDatabaseContext _dbContext;
-        private const string CollectionName = "test";
-        public readonly IMongoCollection<TEntity> Collection;
+        public readonly string CollectionName = "test";
+		public readonly IMongoCollection<MongoDbEntity> Collection;
 
-        public MongoRepository(IMongoDbDatabaseContext dbContext)
+	    protected MongoRepository(IMongoDbDatabaseContext dbContext, string collectionName)
         {
             _dbContext = dbContext;
-            Collection = _dbContext.Database.GetCollection<TEntity>(CollectionName);
+			CollectionName = collectionName;
+			Collection = _dbContext.Database.GetCollection<MongoDbEntity>(CollectionName);
         }
 
-        /// <summary>
+	    protected MongoRepository()
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    /// <summary>
         /// Adds a new record
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task<ObjectId> Add(TEntity entity)
+		public virtual async Task<ObjectId> Add(MongoDbEntity entity)
         {
             await Collection.InsertOneAsync(entity);
 
@@ -38,9 +44,9 @@ namespace JCampon.MongoDB.Repositories
 		/// </summary>
 		/// <param name="id">Id of entity</param>
 		/// <returns>If Id matches an entity in the database, returns entity. If no matches are found, returns null</returns>
-		public async Task<TEntity> GetById(ObjectId id)
+		public virtual async Task<MongoDbEntity> GetById(ObjectId id)
         {
-            var filter = Builders<TEntity>.Filter.Eq("Id", id);
+			var filter = Builders<MongoDbEntity>.Filter.Eq("Id", id);
 
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
@@ -49,7 +55,7 @@ namespace JCampon.MongoDB.Repositories
         /// get all records
         /// </summary>
         /// <returns>return all entities in the database, returns entity. If no matches are found, returns null</returns>
-        public async Task<IEnumerable<TEntity>> GetAll()
+		public virtual async Task<IEnumerable<MongoDbEntity>> GetAll()
         {
             return await Collection.Find(_ => true).ToListAsync();
         }

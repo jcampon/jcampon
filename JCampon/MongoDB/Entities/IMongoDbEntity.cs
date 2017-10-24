@@ -1,6 +1,6 @@
 ﻿namespace JCampon.MongoDB.Entities
 {
-    public interface IAggregateRoot
+	public interface IMongoDbEntity
     {
     }
 }
