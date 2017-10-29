@@ -10,19 +10,23 @@ using JCampon.MongoDB.Entities;
 namespace JCampon.MongoDB.Repositories
 {
 
-	public abstract class MongoRepositoryWithIntId<TMongoDbEntityWithIntId> : MongoRepository where TMongoDbEntityWithIntId : MongoDbEntityWithIntId
+	public abstract class MongoRepositoryWithIntId<TMongoDbEntityWithIntId> : MongoRepository<TMongoDbEntityWithIntId>, IMongoRepositoryWithIntId<TMongoDbEntityWithIntId> where TMongoDbEntityWithIntId : MongoDbEntityWithIntId
     {
-
 		/// <summary>
 		/// Adds a new record
 		/// </summary>
 		/// <param name="entity"></param>
 		/// <returns></returns>
-		public async Task<int> Add(TMongoDbEntityWithIntId entity)
+		public new async Task<int> Add(TMongoDbEntityWithIntId entity)
 		{
 			await Collection.InsertOneAsync(entity);
 
-			return entity._id;
-		}    
+			return entity.Id;
+		}
+
+		public Task<int> GetNextSequenceValue()
+		{
+			throw new NotImplementedException();
+		}
     }
 }

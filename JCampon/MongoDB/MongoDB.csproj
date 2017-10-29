@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\IntSequenceCounter.cs" />
+    <Compile Include="Entities\IntSequenceCounterEntity.cs" />
     <Compile Include="Entities\IMongoDbEntity.cs" />
     <Compile Include="Entities\MongoDbEntity.cs" />
     <Compile Include="Entities\MongoDbEntityWithIntId.cs" />

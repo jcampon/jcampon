@@ -9,9 +9,9 @@ using MongoDB.Bson;
 
 namespace JCampon.MongoDB.Entities
 {
-	public abstract class MongoDbEntity
+	public abstract class MongoDbEntity : IMongoDbEntity
     {
         [BsonId]
-        public ObjectId _id { get; set; }
+        public ObjectId Id { get; set; }
     }
 }

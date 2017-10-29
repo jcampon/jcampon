@@ -9,7 +9,7 @@ using JCampon.MongoDB.Entities;
 
 namespace JCampon.MongoDB.Repositories
 {
-	public interface IMongoRepository<TMongoDbEntity> where TMongoDbEntity : MongoDbEntity
+	public interface IMongoRepository<TMongoDbEntity> where TMongoDbEntity : IMongoDbEntity
     {
         /// <summary>
         /// Adds a new record
@@ -32,5 +32,4 @@ namespace JCampon.MongoDB.Repositories
 		Task<TMongoDbEntity> GetById(ObjectId id);
 
     }
-
 }

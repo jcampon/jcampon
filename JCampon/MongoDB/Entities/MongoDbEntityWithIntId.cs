@@ -8,9 +8,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace JCampon.MongoDB.Entities
 {
-    public abstract class MongoDbEntityWithIntId : MongoDbEntity
+	public abstract class MongoDbEntityWithIntId : MongoDbEntity
     {
         [BsonId]
-        new public int _id { get; set; }
+        new public int Id { get; set; }
     }
 }
