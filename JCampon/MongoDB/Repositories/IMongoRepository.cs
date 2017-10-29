@@ -31,5 +31,13 @@ namespace JCampon.MongoDB.Repositories
 		/// <returns>If Id matches an entity in the database, returns entity. If no matches are found, returns null</returns>
 		Task<TMongoDbEntity> GetById(ObjectId id);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="entity"></param>
+		/// <returns></returns>
+		Task<ReplaceOneResult> Update(TMongoDbEntity entity);
+
+
     }
 }

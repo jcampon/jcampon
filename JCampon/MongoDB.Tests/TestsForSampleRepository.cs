@@ -45,6 +45,27 @@ namespace JCampon.MongoDB.Tests
 			Assert.That(theEntityReadFromTheDatabase.EntityName, Is.EqualTo(newEntity.EntityName));
 		}
 
+		[Test]
+		public async void Test_that_a_record_can_be_edited_on_the_collection()
+		{
+			// Arrange
+			var newEntity = GetNewEntity();
+			var theNewIdReturned = await TheSampleRepository.Add(newEntity);
+			var theEntityReadFromTheDatabase = await TheSampleRepository.GetById(theNewIdReturned);
+
+			// Act
+			theEntityReadFromTheDatabase.EntityName = "Edited name";
+			var theReplaceOneResult = await TheSampleRepository.Update(theEntityReadFromTheDatabase);
+			var theUpdatedEntityReadFromTheDatabase = await TheSampleRepository.GetById(theNewIdReturned);
+
+			// Assert
+			Assert.That(theReplaceOneResult, Is.Not.Null);
+			Assert.That(theReplaceOneResult.ModifiedCount, Is.EqualTo(1));
+			Assert.That(theUpdatedEntityReadFromTheDatabase, Is.Not.Null);
+			Assert.That(theUpdatedEntityReadFromTheDatabase.Id, Is.EqualTo(theEntityReadFromTheDatabase.Id));
+			Assert.That(theUpdatedEntityReadFromTheDatabase.EntityName, Is.EqualTo("Edited name"));
+		}
+
 		private SampleEntity GetNewEntity()
 		{
 			return new SampleEntity() {EntityName = "New Entity"};

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Bson;
@@ -63,6 +64,17 @@ namespace JCampon.MongoDB.Repositories
         {
             return await Collection.Find(_ => true).ToListAsync();
         }
+
+		public virtual async Task<ReplaceOneResult> Update(TMongoDbEntity updatedEntity)
+		{
+			var filter = Builders<TMongoDbEntity>.Filter.Eq("Id", updatedEntity.Id);
+			//var update = Builders<TMongoDbEntity>.Update.Set("Name", windFarm.Name);
+			//update.AddToSet("UpdatedOn", DateTime.Now);
+			
+			var result = await Collection.ReplaceOneAsync(filter, updatedEntity);
+
+			return result;
+		}
 
     }
 }
