@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using NUnit.Framework;
 
 namespace JCampon.MongoDB.Tests
@@ -65,6 +66,23 @@ namespace JCampon.MongoDB.Tests
 			Assert.That(theUpdatedEntityReadFromTheDatabase.Id, Is.EqualTo(theEntityReadFromTheDatabase.Id));
 			Assert.That(theUpdatedEntityReadFromTheDatabase.EntityName, Is.EqualTo("Edited name"));
 		}
+
+		[Test]
+		public async void Test_that_a_record_can_be_deleted_from_the_collection()
+		{
+			// Arrange
+			var newEntity = GetNewEntity();
+			var theNewIdReturned = await TheSampleRepository.Add(newEntity);
+			var theEntityReadFromTheDatabase = await TheSampleRepository.GetById(theNewIdReturned);
+
+			// Act
+			var actualDeleteResult = await TheSampleRepository.Delete(theEntityReadFromTheDatabase);
+			var searchResultAfterDeletion = await TheSampleRepository.GetById(theNewIdReturned);
+
+			// Assert
+			Assert.That(actualDeleteResult.IsAcknowledged, Is.True);
+			Assert.That(actualDeleteResult.DeletedCount, Is.EqualTo(1));
+			Assert.That(searchResultAfterDeletion, Is.Null);		}
 
 		private SampleEntity GetNewEntity()
 		{

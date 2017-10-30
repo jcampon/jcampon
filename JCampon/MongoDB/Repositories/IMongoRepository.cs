@@ -39,5 +39,7 @@ namespace JCampon.MongoDB.Repositories
 		Task<ReplaceOneResult> Update(TMongoDbEntity entity);
 
 
+		Task<DeleteResult> Delete(TMongoDbEntity entity);
+
     }
 }

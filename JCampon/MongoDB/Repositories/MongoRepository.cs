@@ -65,6 +65,11 @@ namespace JCampon.MongoDB.Repositories
             return await Collection.Find(_ => true).ToListAsync();
         }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="updatedEntity"></param>
+		/// <returns></returns>
 		public virtual async Task<ReplaceOneResult> Update(TMongoDbEntity updatedEntity)
 		{
 			var filter = Builders<TMongoDbEntity>.Filter.Eq("Id", updatedEntity.Id);
@@ -76,5 +81,18 @@ namespace JCampon.MongoDB.Repositories
 			return result;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="entityToDelete"></param>
+		/// <returns></returns>
+		public virtual async Task<DeleteResult> Delete(TMongoDbEntity entityToDelete)
+		{
+			var filter = Builders<TMongoDbEntity>.Filter.Eq("Id", entityToDelete.Id);
+
+			var result = await Collection.DeleteOneAsync(filter);
+
+			return result;			
+		}
     }
 }
