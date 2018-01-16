@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>JCampon.MongoDB</id>
+	<title>JCampon.MongoDB</title>
+	<version>1.0.0</version>
+	<authors>JCampon</authors>
+	<owners>JCampon</owners>
+    <projectUrl>https://github.com/jcampon/jcampon</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MongoDB Library developed by JCampon</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>JCampon (C) Copyright 2017</copyright>
+    <tags>MongoDB</tags>
+	<summary>MongoDB Library developed by JCampon</summary>
+  </metadata>
+</package>

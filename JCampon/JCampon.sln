@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB", "MongoDB\MongoDB.csproj", "{6E43135B-760F-44F3-889F-D1EE446CE71D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCampon.MongoDB", "MongoDB\JCampon.MongoDB.csproj", "{6E43135B-760F-44F3-889F-D1EE446CE71D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB.Tests", "MongoDB.Tests\MongoDB.Tests.csproj", "{198D751A-B22E-4859-B94C-52E021661B89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCampon.MongoDB.Tests", "MongoDB.Tests\JCampon.MongoDB.Tests.csproj", "{198D751A-B22E-4859-B94C-52E021661B89}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{51B64850-D55A-478D-8CA8-D0E22479BCE1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JCampon.MongoDB", "JCampon.MongoDB", "{51B64850-D55A-478D-8CA8-D0E22479BCE1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5C86B047-F9FB-4176-9A44-FAA405EE746B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
