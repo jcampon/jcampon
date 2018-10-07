@@ -10,34 +10,19 @@ using JCampon.MongoDB.Entities;
 
 namespace JCampon.MongoDB.Repositories
 {
-	public abstract class MongoRepository<TMongoDbEntity> : IMongoRepository<TMongoDbEntity> where TMongoDbEntity : IMongoDbEntity
-	{
-		public readonly string CollectionName;
-		protected readonly IMongoCollection<TMongoDbEntity> Collection;
-
-	    protected MongoRepository(IMongoDbDatabaseContext dbContext, string collectionName)
+	public abstract class MongoDbRepositoryWithIntId<T> : BaseMongoDbRepository<T, int>, 
+                                                          IBaseMongoDbRepository<T, int> where T : MongoDbEntityWithIntId, IMongoDbAggregateRoot
+    {
+	    protected MongoDbRepositoryWithIntId(IMongoDbDatabaseContext dbContext, string collectionName) : base(dbContext, collectionName)
         {
-			if (dbContext == null)
-				throw new ArgumentNullException("dbContext", "ERROR! the parameter dbContext cannot be NULL");
-
-			if(string.IsNullOrWhiteSpace(collectionName))
-				throw new ArgumentNullException("collectionName", "ERROR! the parameter collectionName cannot be NULL");
-
-		    CollectionName = collectionName;
-			Collection = dbContext.Database.GetCollection<TMongoDbEntity>(collectionName);
         }
-
-	    protected MongoRepository()
-	    {
-		    throw new NotImplementedException();
-	    }
 
 	    /// <summary>
         /// Adds a new record
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-		public virtual async Task<ObjectId> Add(TMongoDbEntity entity)
+		public new virtual async Task<int> AddOneAsync(T entity)
         {
             await Collection.InsertOneAsync(entity);
 
@@ -49,22 +34,24 @@ namespace JCampon.MongoDB.Repositories
 		/// </summary>
 		/// <param name="id">Id of entity</param>
 		/// <returns>If Id matches an entity in the database, returns entity. If no matches are found, returns null</returns>
-		public virtual async Task<TMongoDbEntity> GetById(ObjectId id)
+		public new virtual async Task<T> GetByIdAsync(int id)
         {
-			var filter = Builders<TMongoDbEntity>.Filter.Eq("Id", id);
+			var filter = Builders<T>.Filter.Eq(entity => entity.Id, id);
 
-            return await Collection.Find(filter).FirstOrDefaultAsync();
+            return await Collection.Find(filter).SingleAsync();
         }
 		
 		/// <summary>
         /// get all records
         /// </summary>
         /// <returns>return all entities in the database, returns entity. If no matches are found, returns null</returns>
-		public virtual async Task<IEnumerable<TMongoDbEntity>> GetAll()
+		public new virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await Collection.Find(_ => true).ToListAsync();
+            // return await Collection.Find(_ => true).ToListAsync(); 
+            return await Collection.Find(Builders<T>.Filter.Empty).ToListAsync();
         }
 
+        /*
 		/// <summary>
 		/// 
 		/// </summary>
@@ -94,5 +81,6 @@ namespace JCampon.MongoDB.Repositories
 
 			return result;			
 		}
+        */
     }
 }

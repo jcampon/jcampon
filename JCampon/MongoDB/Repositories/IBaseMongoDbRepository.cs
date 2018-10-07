@@ -9,37 +9,42 @@ using JCampon.MongoDB.Entities;
 
 namespace JCampon.MongoDB.Repositories
 {
-	public interface IMongoRepository<TMongoDbEntity> where TMongoDbEntity : IMongoDbEntity
+	public interface IBaseMongoDbRepository<T, TId> where T : MongoDbAggregateRoot<TId>, IMongoDbAggregateRoot
     {
         /// <summary>
         /// Adds a new record
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-		Task<ObjectId> Add(TMongoDbEntity entity);
+		Task<TId> AddOneAsync(T entity);
 
         /// <summary>
 		/// get all records
 		/// </summary>
 		/// <returns>return all entities in the database, returns entity. If no matches are found, returns null</returns>
-		Task<IEnumerable<TMongoDbEntity>> GetAll();
+		Task<IEnumerable<T>> GetAllAsync();
 
         /// <summary>
 		/// Find an entity by its Id
 		/// </summary>
 		/// <param name="id">Id of entity</param>
 		/// <returns>If Id matches an entity in the database, returns entity. If no matches are found, returns null</returns>
-		Task<TMongoDbEntity> GetById(ObjectId id);
+		Task<T> GetByIdAsync(TId id);
 
+        /*
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="entity"></param>
 		/// <returns></returns>
-		Task<ReplaceOneResult> Update(TMongoDbEntity entity);
+		Task<ReplaceOneResult> UpdateOneAsync(T entity);
 
-
-		Task<DeleteResult> Delete(TMongoDbEntity entity);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+		Task<DeleteResult> DeleteOneAsync(T entity);
+        */
     }
 }

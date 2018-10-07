@@ -9,7 +9,6 @@ namespace JCampon.MongoDB.Entities
 {
 	public class IntSequenceCounterEntity : MongoDbEntityWithIntId
     {
-        [BsonId]
 		public string DatabaseName { get; set; }
 		public string CollectionName { get; set; }
 		public int CurrentValueOnIntSequenceCounter { get; set; }
