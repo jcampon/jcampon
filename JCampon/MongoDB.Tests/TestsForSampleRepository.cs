@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace JCampon.MongoDB.Tests
 {
@@ -22,23 +23,23 @@ namespace JCampon.MongoDB.Tests
 		}
 
 		[Test]
-		public async void Test_that_a_record_can_be_added_into_the_collection()
+		public async Task Test_that_a_record_can_be_added_into_the_collection()
 		{
 			var newEntity = GetNewEntity();
 
-			var theNewIdReturned = await TheSampleRepository.Add(newEntity);
+			var theNewIdReturned = await TheSampleRepository.AddOneAsync(newEntity);
 
 			Assert.That(theNewIdReturned, Is.Not.Null);
 			Assert.That(theNewIdReturned, Is.TypeOf<ObjectId>());
 		}
 
 		[Test]
-		public async void Test_that_a_record_can_be_read_from_the_collection()
+		public async Task Test_that_a_record_can_be_read_from_the_collection()
 		{
 			var newEntity = GetNewEntity();
-			var theNewIdReturned = await TheSampleRepository.Add(newEntity);
+			var theNewIdReturned = await TheSampleRepository.AddOneAsync(newEntity);
 
-			var theEntityReadFromTheDatabase = await TheSampleRepository.GetById(theNewIdReturned);
+			var theEntityReadFromTheDatabase = await TheSampleRepository.GetByIdAsync(theNewIdReturned);
 
 			Assert.That(theEntityReadFromTheDatabase, Is.Not.Null);
 			Assert.That(theEntityReadFromTheDatabase, Is.TypeOf<SampleEntity>());
@@ -47,17 +48,17 @@ namespace JCampon.MongoDB.Tests
 		}
 
 		[Test]
-		public async void Test_that_a_record_can_be_edited_on_the_collection()
+		public async Task Test_that_a_record_can_be_edited_on_the_collection()
 		{
 			// Arrange
 			var newEntity = GetNewEntity();
-			var theNewIdReturned = await TheSampleRepository.Add(newEntity);
-			var theEntityReadFromTheDatabase = await TheSampleRepository.GetById(theNewIdReturned);
+			var theNewIdReturned = await TheSampleRepository.AddOneAsync(newEntity);
+			var theEntityReadFromTheDatabase = await TheSampleRepository.GetByIdAsync(theNewIdReturned);
 
 			// Act
 			theEntityReadFromTheDatabase.EntityName = "Edited name";
-			var theReplaceOneResult = await TheSampleRepository.Update(theEntityReadFromTheDatabase);
-			var theUpdatedEntityReadFromTheDatabase = await TheSampleRepository.GetById(theNewIdReturned);
+			var theReplaceOneResult = await TheSampleRepository.UpdateOneAsync(theEntityReadFromTheDatabase);
+			var theUpdatedEntityReadFromTheDatabase = await TheSampleRepository.GetByIdAsync(theNewIdReturned);
 
 			// Assert
 			Assert.That(theReplaceOneResult, Is.Not.Null);
@@ -68,16 +69,16 @@ namespace JCampon.MongoDB.Tests
 		}
 
 		[Test]
-		public async void Test_that_a_record_can_be_deleted_from_the_collection()
+		public async Task Test_that_a_record_can_be_deleted_from_the_collection()
 		{
 			// Arrange
 			var newEntity = GetNewEntity();
-			var theNewIdReturned = await TheSampleRepository.Add(newEntity);
-			var theEntityReadFromTheDatabase = await TheSampleRepository.GetById(theNewIdReturned);
+			var theNewIdReturned = await TheSampleRepository.AddOneAsync(newEntity);
+			var theEntityReadFromTheDatabase = await TheSampleRepository.GetByIdAsync(theNewIdReturned);
 
 			// Act
-			var actualDeleteResult = await TheSampleRepository.Delete(theEntityReadFromTheDatabase);
-			var searchResultAfterDeletion = await TheSampleRepository.GetById(theNewIdReturned);
+			var actualDeleteResult = await TheSampleRepository.DeleteOneAsync(theEntityReadFromTheDatabase);
+			var searchResultAfterDeletion = await TheSampleRepository.GetByIdAsync(theNewIdReturned);
 
 			// Assert
 			Assert.That(actualDeleteResult.IsAcknowledged, Is.True);

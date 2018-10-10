@@ -12,7 +12,7 @@ namespace JCampon.MongoDB.Repositories
 {
 	public abstract class BaseMongoDbRepository<T, TId> : IBaseMongoDbRepository<T, TId> where T : MongoDbAggregateRoot<TId>, IMongoDbAggregateRoot
     {
-		protected readonly string CollectionName;
+		public readonly string CollectionName;
 		protected readonly IMongoCollection<T> Collection;
 
 	    protected BaseMongoDbRepository(IMongoDbDatabaseContext dbContext, string collectionName)
@@ -60,16 +60,15 @@ namespace JCampon.MongoDB.Repositories
             // return await Collection.Find(_ => true).ToListAsync(); 
             return await Collection.Find(Builders<T>.Filter.Empty).ToListAsync();
         }
-
-        /*
+        
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="updatedEntity"></param>
 		/// <returns></returns>
-		public virtual async Task<ReplaceOneResult> Update(TMongoDbEntity updatedEntity)
+		public virtual async Task<ReplaceOneResult> UpdateOneAsync(T updatedEntity)
 		{
-			var filter = Builders<TMongoDbEntity>.Filter.Eq("Id", updatedEntity.Id);
+			var filter = Builders<T>.Filter.Eq(t => t.Id, updatedEntity.Id);
 			//var update = Builders<TMongoDbEntity>.Update.Set("Name", windFarm.Name);
 			//update.AddToSet("UpdatedOn", DateTime.Now);
 			
@@ -83,14 +82,14 @@ namespace JCampon.MongoDB.Repositories
 		/// </summary>
 		/// <param name="entityToDelete"></param>
 		/// <returns></returns>
-		public virtual async Task<DeleteResult> Delete(TMongoDbEntity entityToDelete)
+		public virtual async Task<DeleteResult> DeleteOneAsync(T entityToDelete)
 		{
-			var filter = Builders<TMongoDbEntity>.Filter.Eq("Id", entityToDelete.Id);
+			var filter = Builders<T>.Filter.Eq(t => t.Id, entityToDelete.Id);
 
 			var result = await Collection.DeleteOneAsync(filter);
 
 			return result;			
 		}
-        */
+        
     }
 }

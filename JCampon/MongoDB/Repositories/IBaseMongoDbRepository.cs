@@ -31,7 +31,6 @@ namespace JCampon.MongoDB.Repositories
 		/// <returns>If Id matches an entity in the database, returns entity. If no matches are found, returns null</returns>
 		Task<T> GetByIdAsync(TId id);
 
-        /*
 		/// <summary>
 		/// 
 		/// </summary>
@@ -45,6 +44,6 @@ namespace JCampon.MongoDB.Repositories
         /// <param name="entity"></param>
         /// <returns></returns>
 		Task<DeleteResult> DeleteOneAsync(T entity);
-        */
+
     }
 }

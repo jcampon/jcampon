@@ -7,8 +7,8 @@ using JCampon.MongoDB.Repositories;
 
 namespace JCampon.MongoDB.Tests
 {
-	public class SampleRepository : MongoRepositoryWithId<SampleEntity>
-	{
+	public class SampleRepository : MongoDbRepositoryWithObjectId<SampleEntity>
+    {
 		public SampleRepository(IMongoDbDatabaseContext dbContext, string collectionName) : base(dbContext, collectionName)
 		{
 		}

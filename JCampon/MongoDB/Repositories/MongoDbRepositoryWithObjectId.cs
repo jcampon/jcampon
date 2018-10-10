@@ -36,9 +36,9 @@ namespace JCampon.MongoDB.Repositories
 		/// <returns>If Id matches an entity in the database, returns entity. If no matches are found, returns null</returns>
 		public new virtual async Task<T> GetByIdAsync(ObjectId id)
         {
-			var filter = Builders<T>.Filter.Eq(entity => entity.Id, id);
+            var result = await Collection.FindAsync(doc => doc.Id.Equals(id));
 
-            return await Collection.Find(filter).SingleAsync();
+            return result.FirstOrDefault();
         }
 		
 		/// <summary>
