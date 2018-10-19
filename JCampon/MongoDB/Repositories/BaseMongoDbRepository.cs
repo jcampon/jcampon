@@ -66,13 +66,12 @@ namespace JCampon.MongoDB.Repositories
 		/// </summary>
 		/// <param name="updatedEntity"></param>
 		/// <returns></returns>
-		public virtual async Task<ReplaceOneResult> UpdateOneAsync(T updatedEntity)
+		public virtual async Task<T> FindOneAndReplaceAsync(T updatedEntity)
 		{
 			var filter = Builders<T>.Filter.Eq(t => t.Id, updatedEntity.Id);
-			//var update = Builders<TMongoDbEntity>.Update.Set("Name", windFarm.Name);
-			//update.AddToSet("UpdatedOn", DateTime.Now);
-			
-			var result = await Collection.ReplaceOneAsync(filter, updatedEntity);
+		    var options = new FindOneAndReplaceOptions<T>() { ReturnDocument = ReturnDocument.After };    
+
+		    var result = await Collection.FindOneAndReplaceAsync(filter, updatedEntity, options);
 
 			return result;
 		}

@@ -36,7 +36,7 @@ namespace JCampon.MongoDB.Repositories
 		/// </summary>
 		/// <param name="entity"></param>
 		/// <returns></returns>
-		Task<ReplaceOneResult> UpdateOneAsync(T entity);
+		Task<T> FindOneAndReplaceAsync(T entity);
 
         /// <summary>
         /// 

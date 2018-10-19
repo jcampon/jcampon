@@ -57,12 +57,11 @@ namespace JCampon.MongoDB.Tests
 
 			// Act
 			theEntityReadFromTheDatabase.EntityName = "Edited name";
-			var theReplaceOneResult = await TheSampleRepository.UpdateOneAsync(theEntityReadFromTheDatabase);
+			var theReplaceOneResult = await TheSampleRepository.FindOneAndReplaceAsync(theEntityReadFromTheDatabase);
 			var theUpdatedEntityReadFromTheDatabase = await TheSampleRepository.GetByIdAsync(theNewIdReturned);
 
 			// Assert
 			Assert.That(theReplaceOneResult, Is.Not.Null);
-			Assert.That(theReplaceOneResult.ModifiedCount, Is.EqualTo(1));
 			Assert.That(theUpdatedEntityReadFromTheDatabase, Is.Not.Null);
 			Assert.That(theUpdatedEntityReadFromTheDatabase.Id, Is.EqualTo(theEntityReadFromTheDatabase.Id));
 			Assert.That(theUpdatedEntityReadFromTheDatabase.EntityName, Is.EqualTo("Edited name"));
