@@ -8,7 +8,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace JCampon.MongoDB.Entities
 {
-	public abstract class MongoDbEntityWithIntId : MongoDbAggregateRoot<int>, IMongoDbAggregateRoot
+	public abstract class MongoDbEntityWithIntId : MongoDbAggregateRoot<int>
     {
 
     }

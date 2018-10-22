@@ -34,7 +34,15 @@ namespace JCampon.MongoDB.Repositories
         /// <returns></returns>
 		public virtual async Task<TId> AddOneAsync(T entity)
         {
-            await Collection.InsertOneAsync(entity);
+            try
+            {
+                await Collection.InsertOneAsync(entity);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
             return entity.Id;
         }
@@ -44,11 +52,12 @@ namespace JCampon.MongoDB.Repositories
 		/// </summary>
 		/// <param name="id">Id of entity</param>
 		/// <returns>If Id matches an entity in the database, returns entity. If no matches are found, returns null</returns>
-		public virtual async Task<T> GetByIdAsync(TId id)
+		public virtual async Task<T> GetOneByIdAsync(TId id)
         {
-			var filter = Builders<T>.Filter.Eq(entity => entity.Id, id);
+            var filter = Builders<T>.Filter.Eq(entity => entity.Id, id);
+            var result = await Collection.FindAsync(filter).Result.FirstOrDefaultAsync();
 
-            return await Collection.Find(filter).SingleAsync();
+            return result;            
         }
 		
 		/// <summary>
@@ -89,6 +98,20 @@ namespace JCampon.MongoDB.Repositories
 
 			return result;			
 		}
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entitiesToDelete"></param>
+        /// <returns></returns>
+        public virtual async Task<DeleteResult> DeleteManyAsync(IEnumerable<TId> listOfIdsToDelete)
+        {
+            var filter = Builders<T>.Filter.In(entity => entity.Id, listOfIdsToDelete);
+
+            var result = await Collection.DeleteManyAsync(filter);
+
+            return result;
+        }
+
     }
 }

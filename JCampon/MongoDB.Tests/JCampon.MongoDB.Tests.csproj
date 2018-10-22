@@ -70,10 +70,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SampleEntity.cs" />
-    <Compile Include="SampleRepository.cs" />
+    <Compile Include="SampleEntityWithIntId.cs" />
+    <Compile Include="SampleRepositoryWithIntId.cs" />
+    <Compile Include="SampleRepositoryWithObjectId.cs" />
     <Compile Include="BaseTestsForMongoDbRepositories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestsForSampleRepository.cs" />
+    <Compile Include="TestsForSampleRepositoryWithIntId.cs" />
+    <Compile Include="TestsForSampleRepositoryWithObjectId.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
