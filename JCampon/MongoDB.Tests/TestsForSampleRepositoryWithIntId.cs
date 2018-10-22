@@ -21,7 +21,7 @@ namespace JCampon.MongoDB.Tests
         [Test]
 	    public void Validate_that_the_sample_repository_implements_the_expected_inheritance_and_interfaces()
 	    {
-	        Assert.That(TheSampleRepositoryWithIntId, Is.InstanceOf<MongoDbRepositoryWithIntId<SampleEntityWithIntId>>()); // Inherits from base class
+	        Assert.That(TheSampleRepositoryWithIntId, Is.InstanceOf<MongoDbRepositoryWithIntegerId<SampleEntityWithIntId>>()); // Inherits from base class
 	        Assert.That(TheSampleRepositoryWithIntId, Is.InstanceOf<BaseMongoDbRepository<SampleEntityWithIntId, int>>()); // Inherits from root base class
             Assert.That(TheSampleRepositoryWithIntId is IBaseMongoDbRepository<SampleEntityWithIntId, int>, Is.True);      // Implements interface through base classes
         }
