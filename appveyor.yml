@@ -27,6 +27,9 @@ assembly_info:
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
 
+before_build: 
+  - cmd: nuget restore Jcampon\Jcampon.sln
+
 # Build settings, not to be confused with "before_build" and "after_build".
 # "project" is relative to the original build directory and not influenced by directory changes in "before_build".
 build:
