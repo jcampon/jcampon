@@ -1,0 +1,33 @@
+# version format
+version: 1.0.{build}
+
+# you can use {branch} name in version format too
+# version: 1.0.{build}-{branch}
+
+# branches to build
+branches:
+  only:
+    - master
+    
+# Build worker image (VM template)
+image: Visual Studio 2017
+
+# build cache to preserve files/folders between builds
+cache:
+  - packages -> **\packages.config  
+  
+# enable patching of AssemblyInfo.* files
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "1.0.{build}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+  
+# build Configuration, i.e. Debug, Release, etc.
+configuration: Release
+
+# Build settings, not to be confused with "before_build" and "after_build".
+# "project" is relative to the original build directory and not influenced by directory changes in "before_build".
+build:
+  project: Jcampon\Jcampon.sln      # path to Visual Studio solution or project
