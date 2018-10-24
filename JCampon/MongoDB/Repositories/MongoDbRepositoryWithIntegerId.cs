@@ -15,7 +15,8 @@ namespace JCampon.MongoDB.Repositories
     {
 	    protected MongoDbRepositoryWithIntegerId(IMongoDbDatabaseContext dbContext, string collectionName) : base(dbContext, collectionName)
         {
-            /**/
+            /*             
+             */
         }
     }
 }
