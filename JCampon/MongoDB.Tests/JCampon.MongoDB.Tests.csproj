@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="SampleEntity.cs" />
     <Compile Include="SampleEntityWithIntId.cs" />
     <Compile Include="SampleRepositoryWithIntId.cs" />
