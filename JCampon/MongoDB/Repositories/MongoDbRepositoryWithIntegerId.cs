@@ -10,11 +10,13 @@ using JCampon.MongoDB.Entities;
 
 namespace JCampon.MongoDB.Repositories
 {
-	public abstract class MongoDbRepositoryWithIntId<T> : BaseMongoDbRepository<T, int>, 
+	public abstract class MongoDbRepositoryWithIntegerId<T> : BaseMongoDbRepository<T, int>, 
                                                           IBaseMongoDbRepository<T, int> where T : MongoDbEntityWithIntId, IMongoDbAggregateRoot
     {
-	    protected MongoDbRepositoryWithIntId(IMongoDbDatabaseContext dbContext, string collectionName) : base(dbContext, collectionName)
+	    protected MongoDbRepositoryWithIntegerId(IMongoDbDatabaseContext dbContext, string collectionName) : base(dbContext, collectionName)
         {
+            /*             
+             */
         }
     }
 }

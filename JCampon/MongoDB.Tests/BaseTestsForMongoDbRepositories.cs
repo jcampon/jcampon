@@ -13,7 +13,7 @@ namespace JCampon.MongoDB.Tests
 
 		public BaseTestsForMongoDbRepositories()
 		{
-			DbContext = new MongoDbDatabaseContext("mongodb://localhost:27018", "JCamponTestDatabase");
+			DbContext = new MongoDbDatabaseContext("mongodb://localhost:27017", "JCamponTestDatabase");
 		}
 
 	    #region Private helper methods

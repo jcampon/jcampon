@@ -58,7 +58,7 @@
     <Compile Include="Entities\MongoDbEntityWithIntId.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\MongoDbRepositoryWithIntId.cs" />
+    <Compile Include="Repositories\MongoDbRepositoryWithIntegerId.cs" />
     <Compile Include="Repositories\MongoDbRepositoryWithObjectId.cs" />
     <Compile Include="Repositories\IMongoDbDatabaseContext.cs" />
     <Compile Include="Repositories\IBaseMongoDbRepository.cs" />
