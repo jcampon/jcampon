@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCampon.MongoDB", "MongoDB\JCampon.MongoDB.csproj", "{6E43135B-760F-44F3-889F-D1EE446CE71D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCampon.MongoDB.Tests", "MongoDB.Tests\JCampon.MongoDB.Tests.csproj", "{198D751A-B22E-4859-B94C-52E021661B89}"
@@ -31,7 +33,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{198D751A-B22E-4859-B94C-52E021661B89} = {51B64850-D55A-478D-8CA8-D0E22479BCE1}
 		{6E43135B-760F-44F3-889F-D1EE446CE71D} = {51B64850-D55A-478D-8CA8-D0E22479BCE1}
+		{198D751A-B22E-4859-B94C-52E021661B89} = {51B64850-D55A-478D-8CA8-D0E22479BCE1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82F29BB0-75DC-4566-9764-5E3B2D394BA9}
 	EndGlobalSection
 EndGlobal
