@@ -9,7 +9,9 @@ namespace JCampon.MongoDB.Tests
 	public class TestsForSampleRepositoryWithObjectId : BaseTestsForMongoDbRepositories
 	{
 		private const string TheTestCollectionName = "TestCollectionForEntityWithObjectId";
-		protected SampleRepositoryWithObjectId TheSampleRepositoryWithObjectId;
+
+	    protected SampleRepositoryWithObjectId TheSampleRepositoryWithObjectId;
+	    protected IMongoCollection<SampleEntity> Collection;
 
 	    [OneTimeSetUp]
 	    public void OneTimeSetUp()
@@ -97,10 +99,12 @@ namespace JCampon.MongoDB.Tests
 
 	    private void Initialise()
 	    {
-	        DoInitialCleanUpOfCollections(TheTestCollectionName);
+	        Collection = Client.GetDatabase(DefaultTestDatabaseName).GetCollection<SampleEntity>(TheTestCollectionName);
 
-	        TheSampleRepositoryWithObjectId = new SampleRepositoryWithObjectId(DbContext, TheTestCollectionName);
-	    }
+	        Collection.Database.DropCollection(Collection.CollectionNamespace.CollectionName);       // Cleanup test collection
+
+	        TheSampleRepositoryWithObjectId = new SampleRepositoryWithObjectId(Collection);
+        }
 
 	    private SampleEntity GetNewEntity()
 	    {

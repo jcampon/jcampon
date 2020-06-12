@@ -13,18 +13,18 @@ namespace JCampon.MongoDB.Repositories
 	public abstract class BaseMongoDbRepository<T, TId> : IBaseMongoDbRepository<T, TId> where T : MongoDbAggregateRoot<TId>, IMongoDbAggregateRoot
     {
 		public readonly string CollectionName;
-		protected readonly IMongoCollection<T> Collection;
+        public readonly string DatabaseName;
 
-	    protected BaseMongoDbRepository(IMongoDbDatabaseContext dbContext, string collectionName)
+        protected readonly IMongoCollection<T> Collection;
+
+	    protected BaseMongoDbRepository(IMongoCollection<T> collection)
         {
-			if (dbContext == null)
-				throw new ArgumentNullException("dbContext", "ERROR! the parameter dbContext cannot be NULL");
+			if (collection == null)
+				throw new ArgumentNullException("collection", "ERROR! the parameter collection cannot be NULL");
 
-			if(string.IsNullOrWhiteSpace(collectionName))
-				throw new ArgumentNullException("collectionName", "ERROR! the parameter collectionName cannot be NULL");
-
-		    CollectionName = collectionName;
-			Collection = dbContext.Database.GetCollection<T>(collectionName);
+			Collection = collection;
+            CollectionName = collection.CollectionNamespace.CollectionName;
+            DatabaseName = collection.Database.DatabaseNamespace.DatabaseName;
         }
 
 	    /// <summary>

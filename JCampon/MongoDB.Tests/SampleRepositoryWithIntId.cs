@@ -1,10 +1,11 @@
 ﻿using JCampon.MongoDB.Repositories;
+using MongoDB.Driver;
 
 namespace JCampon.MongoDB.Tests
 {
     public class SampleRepositoryWithIntId : MongoDbRepositoryWithIntegerId<SampleEntityWithIntId>
     {
-        public SampleRepositoryWithIntId(IMongoDbDatabaseContext dbContext, string collectionName) : base(dbContext, collectionName)
+        public SampleRepositoryWithIntId(IMongoCollection<SampleEntityWithIntId> collection) : base(collection)
         {
         }
     }

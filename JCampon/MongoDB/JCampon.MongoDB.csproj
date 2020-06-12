@@ -55,15 +55,17 @@
     <Compile Include="Entities\IMongoDbAggregateRoot.cs" />
     <Compile Include="Entities\IntSequenceCounterEntity.cs" />
     <Compile Include="Entities\MongoDbEntity.cs" />
+    <Compile Include="Entities\MongoDbEntityWithStringId.cs" />
     <Compile Include="Entities\MongoDbEntityWithIntId.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IntSequenceCounterRepository.cs" />
+    <Compile Include="Repositories\MongoDbRepositoryWithStringId.cs" />
     <Compile Include="Repositories\MongoDbRepositoryWithIntegerId.cs" />
     <Compile Include="Repositories\MongoDbRepositoryWithObjectId.cs" />
-    <Compile Include="Repositories\IMongoDbDatabaseContext.cs" />
     <Compile Include="Repositories\IBaseMongoDbRepository.cs" />
-    <Compile Include="Repositories\MongoDbDatabaseContext.cs" />
     <Compile Include="Repositories\BaseMongoDbRepository.cs" />
+    <Compile Include="Repositories\Tools\IntSequenceCounterGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

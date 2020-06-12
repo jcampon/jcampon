@@ -3,16 +3,20 @@ using MongoDB.Driver;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using JCampon.MongoDB.Repositories;
+using JCampon.MongoDB.Repositories.Tools;
+using MongoDB.Bson.Serialization;
 
 namespace JCampon.MongoDB.Tests
 {
-	public class TestsForSampleRepositoryWithIntId : BaseTestsForMongoDbRepositories
+    [TestFixture]
+    public class TestsForSampleRepositoryWithIntId : BaseTestsForMongoDbRepositories
 	{
 		private const string TheTestCollectionName = "TestCollectionForEntityWithIntId";
-		protected SampleRepositoryWithIntId TheSampleRepositoryWithIntId;
-        protected int IdValueCounter = 0;
 
-	    [OneTimeSetUp]
+        protected SampleRepositoryWithIntId TheSampleRepositoryWithIntId;
+	    protected IMongoCollection<SampleEntityWithIntId> Collection;
+
+        [OneTimeSetUp]
 	    public void OneTimeSetUp()
 	    {
 	        Initialise();
@@ -43,7 +47,23 @@ namespace JCampon.MongoDB.Tests
 			Assert.That(theNewIdReturned, Is.TypeOf<int>());
 		}
 
-		[Test]
+	    [Test]
+	    public async Task Test_that_two_records_can_be_added_into_the_collection_with_consecutive_id_values()
+	    {
+	        var entity1 = new SampleEntityWithIntId() { EntityName = "Entity #1" };
+	        var entity2 = new SampleEntityWithIntId() { EntityName = "Entity #2" };
+
+            var entity1Id = await TheSampleRepositoryWithIntId.AddOneAsync(entity1);
+	        var entity2Id = await TheSampleRepositoryWithIntId.AddOneAsync(entity2);
+
+            Assert.That(entity1Id, Is.Not.Null);
+	        Assert.That(entity1Id, Is.TypeOf<int>());
+	        Assert.That(entity2Id, Is.Not.Null);
+	        Assert.That(entity2Id, Is.TypeOf<int>());
+	        Assert.That(entity2Id, Is.EqualTo(entity1Id + 1));
+        }
+
+        [Test]
 		public async Task Test_that_a_record_can_be_read_from_the_collection()
 		{
 			var newEntity = GetNewEntity();
@@ -98,18 +118,24 @@ namespace JCampon.MongoDB.Tests
 
 	    private void Initialise()
 	    {
-	        DoInitialCleanUpOfCollections(TheTestCollectionName);
+	        Collection = Client.GetDatabase(DefaultTestDatabaseName).GetCollection<SampleEntityWithIntId>(TheTestCollectionName);
 
-	        TheSampleRepositoryWithIntId = new SampleRepositoryWithIntId(DbContext, TheTestCollectionName);
+	        Collection.Database.DropCollection(Collection.CollectionNamespace.CollectionName);       // Cleanup test collection
+
+	        TheSampleRepositoryWithIntId = new SampleRepositoryWithIntId(Collection);
 	    }
 
 	    private SampleEntityWithIntId GetNewEntity()
 	    {
-	        return new SampleEntityWithIntId()
+	        var IdValueCounter = 0;
+
+            var sampleEntityWithIntId =  new SampleEntityWithIntId()
 	        {
 	            Id = IdValueCounter++,                     // Cheap and nasty autoincrement for INT Id values - Should use an autoincrement key generator and assign it to the BSON serializer, etc..
 	            EntityName = "New Entity with INT Id"
 	        };
+
+	        return sampleEntityWithIntId;
 	    }
 
 	    #endregion
